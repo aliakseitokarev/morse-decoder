@@ -38,7 +38,25 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    let decodedMassage = '';
+
+    function decodeSymb(code) {
+        let morseSymbol = parseInt(code);
+        let decodSymbol = '';
+        let symbol = '';
+        while (morseSymbol % 100 > 1) {
+            morseSymbol % 100 === 10 ? decodSymbol = `.${decodSymbol}` : decodSymbol = `-${decodSymbol}`;
+            morseSymbol = Math.floor(morseSymbol /100);
+        }
+        symbol = MORSE_TABLE[decodSymbol];
+        return symbol;
+    }
+
+    for (let i = 0; i < expr.length; i = i+10) {
+        expr.slice(i, i+10) === '**********' ? decodedMassage += ' ' : decodedMassage += decodeSymb(expr.slice(i, i+10));  
+    }
+
+    return decodedMassage;
 }
 
 module.exports = {
